@@ -1,8 +1,8 @@
 package main
 
 import (
-"crypto/md5"
-"encoding/hex"
+	"crypto/md5"
+	"encoding/hex"
 	"fmt"
 	"strconv"
 	"strings"
