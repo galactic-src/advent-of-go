@@ -10,18 +10,19 @@ import (
 //go:embed input.txt
 var input string
 
-const BIT_LENGTH = 12
-
 func part1() {
 	lines := strings.Split(input, "\n")
-	gamma_s, epsilon_s := mostCommonString(lines)
+	gammaS, epsilonS := mostCommonString(lines)
 
-	gamma, _ := strconv.ParseInt(gamma_s, 2, 64)
-	epsilon, _ := strconv.ParseInt(epsilon_s, 2, 64)
+	gamma, _ := strconv.ParseInt(gammaS, 2, 64)
+	epsilon, _ := strconv.ParseInt(epsilonS, 2, 64)
 
-	fmt.Printf("Part 1: %d\n", gamma*epsilon)
+	fmt.Printf("Part 1: %d\n", gamma * epsilon)
+}
 
-	var oxy_gen int64
+func part2() {
+	lines := strings.Split(input, "\n")
+	var oxygen int64
 	for candidates, ix := lines, 0; len(candidates) > 1; ix++ {
 		var filtered []string
 		most, _ := mostCommonString(candidates)
@@ -31,7 +32,7 @@ func part1() {
 			}
 		}
 		if len(filtered) == 1 {
-			oxy_gen, _ = strconv.ParseInt(filtered[0], 2, 64)
+			oxygen, _ = strconv.ParseInt(filtered[0], 2, 64)
 			break
 		}
 		candidates = filtered
@@ -53,23 +54,23 @@ func part1() {
 		candidates2 = filtered
 	}
 
-	fmt.Printf("Part 2: %d\n", oxy_gen * co2)
+	fmt.Printf("Part 2: %d\n", oxygen * co2)
 }
 
 func mostCommonString(inputs []string) (string, string) {
-	var bit_totals [BIT_LENGTH]int
+	var bitTotals [12]int
 	for _, line := range inputs {
 		for ix, r := range line {
 			if r == '1' {
-				bit_totals[ix]++
+				bitTotals[ix]++
 			}
 		}
 	}
 
 	var most = ""
 	var least = ""
-	for i:=0; i<len(bit_totals); i++ {
-		if float32(bit_totals[i]) >= float32(len(inputs))/2 {
+	for i:=0; i<len(bitTotals); i++ {
+		if float32(bitTotals[i]) >= float32(len(inputs))/2 {
 			most += "1"
 			least += "0"
 		} else {
@@ -83,4 +84,5 @@ func mostCommonString(inputs []string) (string, string) {
 
 func main() {
 	part1()
+	part2()
 }
