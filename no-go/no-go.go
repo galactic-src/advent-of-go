@@ -28,11 +28,22 @@ func ForEach(t interface{}, f func(interface{})) {
 		for i:= 0; i < s.Len(); i++ {
 			f(s.Index(i).Interface())
 		}
+	default:
+		log.Fatalf("Don't know how to Map type %s", reflect.TypeOf(t).Name())
 	}
 }
 
-func Zip(t1 interface{}, t2 interface{}) {
+func Zip(t1 interface{}, t2 interface{}) [][2]interface{} {
+	assertSlice("t1", "Zip", t1)
+	assertSlice("t2", "Zip", t2)
 
+	t1.len()
+}
+
+func assertSlice(variable, function string, slice interface{}) {
+	if reflect.TypeOf(slice).Kind() != reflect.Slice {
+		log.Fatalf("Expected a slice, but got a %s for variable %s in %s", reflect.TypeOf(slice).Name(), variable, function)
+	}
 }
 
 func main() {
