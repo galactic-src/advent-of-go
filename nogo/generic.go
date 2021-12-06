@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"reflect"
+	"strconv"
 )
 
 func Map(t interface{}, f func(interface{}) interface{} ) []interface{} {
@@ -33,12 +34,21 @@ func ForEach(t interface{}, f func(interface{})) {
 	}
 }
 
+func parseInt(s string) int {
+	i, e := strconv.Atoi(s)
+	if e != nil {
+		log.Fatalf("urgh")
+	}
+	return i
+}
+
+/*
 func Zip(t1 interface{}, t2 interface{}) [][2]interface{} {
 	assertSlice("t1", "Zip", t1)
 	assertSlice("t2", "Zip", t2)
 
 	t1.len()
-}
+}*/
 
 func assertSlice(variable, function string, slice interface{}) {
 	if reflect.TypeOf(slice).Kind() != reflect.Slice {
